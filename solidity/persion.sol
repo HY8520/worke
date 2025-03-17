@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.20;
+// import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+// import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 // contract testInt{
 //     int8 a = -1;
@@ -200,25 +202,213 @@ pragma solidity 0.8.20;
     
 // }
 
-contract TestFunc {
+//contract TestFunc {
+//
+//  function a(uint x) external pure returns (uint z) {
+//        return x * x;
+//    }
+//
+//    function b(uint x) external pure returns (uint z) {
+//        return 2 * x;
+//    }
+//
+//    function getSelector() external pure returns (bytes4) {
+//    return this.a.selector; // 返回函数a的选择器
+//}
+//    // bytes4 selector = bytes4(keccak256("a(uint256)"));
+//
+//    function select(bytes4 selector, uint x) external returns (uint z) {
+//    (bool success, bytes memory data) = address(this).call(abi.encodeWithSelector(selector, x));
+//    require(success, "Function call failed");
+//    z = abi.decode(data, (uint));
+//}
+//
+//}
 
-  function a(uint x) external pure returns (uint z) {
-        return x * x;
-    }
+// contract ERC256Req is IERC165 {
+//     bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
+//     mapping(bytes4 => bool) private _supportedInterfaces;
 
-    function b(uint x) external pure returns (uint z) {
-        return 2 * x;
-    }
+//     constructor() {
+//         _registerInterface(_INTERFACE_ID_ERC165);
+//     }
 
-    function getSelector() external pure returns (bytes4) {
-    return this.a.selector; // 返回函数a的选择器
-}
-    // bytes4 selector = bytes4(keccak256("a(uint256)"));
+//     function supportsInterface(bytes4 interfaceId) external view returns (bool) {
+//         return _supportedInterfaces[interfaceId];
+//     }
 
-    function select(bytes4 selector, uint x) external returns (uint z) {
-    (bool success, bytes memory data) = address(this).call(abi.encodeWithSelector(selector, x));
-    require(success, "Function call failed");
-    z = abi.decode(data, (uint));
-}
+//     function _registerInterface(bytes4 interfaceId) internal {
+//         require(interfaceId != 0xffffffff, "ERC165: invalid interface id");
+//         _supportedInterfaces[interfaceId] = true;
+//     }
+// }
 
-}
+// ERC165 接口定义
+// interface IERC165 {
+//     function supportsInterface(bytes4 interfaceId) external view returns (bool);
+// }
+
+// // 自定义接口 1
+// interface ICustomInterface1 {
+//     function customFunction1() external;
+// }
+
+// // 自定义接口 2
+// interface ICustomInterface2 {
+//     function customFunction2() external;
+// }
+
+// // 实现 ERC165 的合约
+// contract ERC165CompliantContract is IERC165 {
+//     mapping(bytes4 => bool) private _supportedInterfaces;
+
+//     constructor() {
+//         // 注册 ERC165 接口
+//         _registerInterface(type(IERC165).interfaceId);
+//         // 注册自定义接口 1
+//         _registerInterface(type(ICustomInterface1).interfaceId);
+//         // 注册自定义接口 2
+//         _registerInterface(type(ICustomInterface2).interfaceId);
+//     }
+
+//     function supportsInterface(bytes4 interfaceId) external view override returns (bool) {
+//         return _supportedInterfaces[interfaceId];
+//     }
+
+//     function _registerInterface(bytes4 interfaceId) internal {
+//         require(interfaceId != 0xffffffff, "ERC165: invalid interface id");
+//         _supportedInterfaces[interfaceId] = true;
+//     }
+// }
+
+// ERC165 接口定义，用于支持接口查询
+// interface IERC165 {
+//     function supportsInterface(bytes4 interfaceId) external view returns (bool);
+// }
+
+// // ERC721 接口定义
+// interface IERC721 is IERC165 {
+//     function balanceOf(address owner) external view returns (uint256 balance);
+//     function ownerOf(uint256 tokenId) external view returns (address owner);
+//     function safeTransferFrom(address from, address to, uint256 tokenId) external;
+//     function transferFrom(address from, address to, uint256 tokenId) external;
+//     function approve(address to, uint256 tokenId) external;
+//     function getApproved(uint256 tokenId) external view returns (address operator);
+//     function setApprovalForAll(address operator, bool _approved) external;
+//     function isApprovedForAll(address owner, address operator) external view returns (bool);
+//     function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;
+// }
+
+// // ERC1155 接口定义
+// interface IERC1155 is IERC165 {
+//     function balanceOf(address account, uint256 id) external view returns (uint256);
+//     function balanceOfBatch(address[] calldata accounts, uint256[] calldata ids) external view returns (uint256[] memory);
+//     function setApprovalForAll(address operator, bool approved) external;
+//     function isApprovedForAll(address account, address operator) external view returns (bool);
+//     function safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data) external;
+//     function safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data) external;
+// }
+
+// // 用于检查交互合约是否实现特定标准的合约
+// contract InterfaceChecker {
+//     // ERC721 接口 ID
+//     bytes4 private constant ERC721_INTERFACE_ID = 0x80ac58cd;
+//     // ERC1155 接口 ID
+//     bytes4 private constant ERC1155_INTERFACE_ID = 0xd9b67a26;
+
+//     // 检查目标合约是否实现 ERC721 标准
+//     function isERC721(address targetContract) external view returns (bool) {
+//         IERC165 target = IERC165(targetContract);
+//         return target.supportsInterface(ERC721_INTERFACE_ID);
+//     }
+
+//     // 检查目标合约是否实现 ERC1155 标准
+//     function isERC1155(address targetContract) external view returns (bool) {
+//         IERC165 target = IERC165(targetContract);
+//         return target.supportsInterface(ERC1155_INTERFACE_ID);
+//     }
+// }
+
+// ERC721 接口定义
+//contract OptimizedTestREC is ERC721URIStorage {
+//    using Counters for Counters.Counter;
+//    Counters.Counter private _tokenIds;
+//
+//
+//    constructor() ERC721("MyCollectibles", "MC") {}
+//
+//
+//    function mintCollectible(address recipient, string memory tokenURI) public returns (uint256) {
+//
+//        _tokenIds.increment();
+//
+//        uint256 newTokenId = _tokenIds.current();
+//
+//        _mint(recipient, newTokenId);
+//
+//        _setTokenURI(newTokenId, tokenURI);
+//
+//        return newTokenId;
+//    }
+// 重写 _burn 函数
+//    function _burn(uint256 tokenId) internal override {
+//        super._burn(tokenId);
+//    }
+//
+//    function tokenURI(uint256 tokenId)public view override returns (string memory){
+//        return super.tokenURI(tokenId);
+//    }
+//}
+
+//contract TestEnumer is ERC721Enumerable {
+//    constructor()public {}
+//
+//    // function getTotalsumple() public view return (uint256){
+//    //     return totalSupply();
+//    // }
+//
+//    // 获取特定索引位置的 NFT
+//    function getTokenByIndex(uint256 index) public view returns (uint256) {
+//        return tokenByIndex(index);
+//    }
+//    // 根据地址获取NFT数量
+//    function getBalanceOf(address _address) public view returns(uint256){
+//        return balanceOf(_address);
+//    }
+//
+//    function getTokenOfOwnerByIndex(address _address,uint256 indexes) public view return (uint256) {
+//return tokenOfOwnerByIndex(_address,indexes);
+//}
+//
+//}
+
+
+//contract MyTestEPC is ERC1155 {
+//    // 定义金币从零开始
+//    uint256 public constant maxSupply = 0;
+//    // 定义非同质化代币
+//    uint256 public ftzh = 1;
+//
+//    string private USER;
+//
+//    constructor(string memory _baseURI) ERC1155(_baseURI) {
+//        _mint(msg.sender, maxSupply, 1000, "");
+//    }
+//// 金币
+//    function minGold(address _address,uint256 aomint) public {
+//        _mint(_address, maxSupply, aomint, "");
+//    }
+//// 非同质化代币
+//    function minFtzh (address _address, uint256 amint) public returns (uint256) {
+//        uint256 ftzhs = ftzh;
+//        _mint(_address, ftzhs, 1, "");
+//        ftzh++;
+//        return ftzh;
+//    }
+//// 转移代币
+//    function getSafeBatchTransferFrom(address deployerAddress,address playerAddress,uint256[] memory tokenIds, uint256[] memory ampit) public returns (uint256){
+//        safeBatchTransferFrom(deployerAddress,playerAddress,tokenIds,ampit,"0x0");
+//        return  balanceOf(deployerAddress,tokenIds[0]);
+//    }
+//
+//}
