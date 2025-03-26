@@ -26,27 +26,3 @@ contract Bank {
         return address(this).balance;
     }
 }
-
-
-question := dao.NewQuestionBank(ctx, nil)
-aubitLog := dao.NewAubitLog(ctx, nil)
-userID, ok := ctx.Value(consts.CtxUserID).(uint64)
-if !ok {
-logger.AppLog.Errorf("operation log add error:%s", "userID is nil")
-//return
-}
-user, _ := Auth.Info(ctx, &requests.AdminInfoReq{ID: userID})
-_, err := question.GlobalUpdate(map[string]interface{}{
-"state":       req.State,
-"audit_id":    user.ID,
-"update_time": time.Now(),
-"audit_time":  time.Now(),
-}, "id = ?", req.ID)
-aubitLog.BankId = uint64(req.ID)
-aubitLog.Tetle = consts.State[req.State]
-aubitLog.UserId = user.ID
-aubitLog.Remark = req.Remark
-aubitLog.CreateTime = time.Now()
-err = aubitLog.GlobalCreate()
-
-return err
